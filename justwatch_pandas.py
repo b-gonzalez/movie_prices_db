@@ -14,7 +14,7 @@ if not my_file.is_file():
     conn = sqlite3.connect(movie_db)
     c = conn.cursor()
     
-    fd = open('movies_db.sql', 'r')
+    fd = open('movies_db_queries.sql', 'r')
     sqlFile = fd.read()
     fd.close()
 
