@@ -10,6 +10,11 @@
 *test*
 /**test**
 
+# note files and folders
+
+*note*
+/**note**
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
