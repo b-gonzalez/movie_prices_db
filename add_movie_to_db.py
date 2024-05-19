@@ -68,5 +68,3 @@ def add_movie_to_db(movie, url):
       df1.to_sql('movies', con=engine, if_exists='append',index=False)
       
       print(f"{movie_name} added to {movie_db}")
-        
-add_movie_to_db("The Lost Arcade ","https://www.justwatch.com/us/movie/the-lost-arcade")
