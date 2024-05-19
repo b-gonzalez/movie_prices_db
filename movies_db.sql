@@ -10,6 +10,12 @@ CREATE TABLE "movies" (
 	PRIMARY KEY("movie_id")
 );
 
+CREATE TABLE "vendors" (
+	"vendor_id"	INTEGER,
+	"vendor"	TEXT,
+	PRIMARY KEY("vendor_id")
+);
+
 CREATE TABLE "prices" (
 	"price_id"	INTEGER,
 	"movie_id"	INTEGER,
@@ -20,10 +26,4 @@ CREATE TABLE "prices" (
 	FOREIGN KEY("movie_id") REFERENCES "movies"("movie_id"),
 	FOREIGN KEY("vendor_id") REFERENCES "vendors"("vendor_id"),
 	PRIMARY KEY("price_id")
-)
-
-CREATE TABLE "vendors" (
-	"vendor_id"	INTEGER,
-	"vendor"	TEXT,
-	PRIMARY KEY("vendor_id")
-)
+);
