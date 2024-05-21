@@ -5,16 +5,16 @@ from datetime import datetime
 import shutil
 import sqlite3
 from pathlib import Path
+import sys
 
-movie_db = "movies_db.db"
+def create_db(db_name, query_file_name):
 
-my_file = Path(movie_db)
+    movie_db = db_name
 
-if not my_file.is_file():
     conn = sqlite3.connect(movie_db)
     c = conn.cursor()
     
-    fd = open('movies_db_queries.sql', 'r')
+    fd = open(query_file_name, 'r')
     sqlFile = fd.read()
     fd.close()
 
@@ -29,18 +29,9 @@ if not my_file.is_file():
             
     c.close()
     conn.close()
-
-engine = create_engine(f'sqlite:///{movie_db}', echo=False)
-
-movies = pd.read_sql('select movie_name, url from movies ORDER BY movie_name',engine)
-
-movie_url = ""
-
-movies_list = []
-
-if len(movies.index) > 0:
+    
+def get_justwatch_data_from_movies(movies):
     for index, row in movies.iterrows():
-        
         movie = row['movie_name']
 
         movie_url = row['url']
@@ -86,7 +77,10 @@ if len(movies.index) > 0:
             ]
 
             movies_list += df_list
+    
+    return movies_list
 
+def add_movies_to_db(movies_list, engine, today):
     # Process if at least one movie was processed in previous step
     if len(movies_list) > 0:
         # code for pandas to create a dataframe and write to CSV
@@ -103,14 +97,15 @@ if len(movies.index) > 0:
 
         df5 = df5.drop(['movie','movie_name','vendor'], axis=1)
         
-        today = datetime.today().strftime('%Y-%m-%d')
+        # today = datetime.today().strftime('%Y-%m-%d')
 
         df5['date']= today
 
         df5.to_sql('prices', con=engine, if_exists='append',index=False)
         
+def backup_db(src, today):
         #backup database
-        src = movie_db
+        # src = movie_db
         
         Path("db_backup").mkdir(exist_ok=True)
         
@@ -118,6 +113,36 @@ if len(movies.index) > 0:
 
         shutil.copyfile(src, dst)
 
-        print("Finished!")
-else:
-    print("No movies in database to query from justwatch. Please use the add_movie_to_db script to add movies to the database")
+def main():
+    movie_db = "movies_db.db"
+
+    my_file = Path(movie_db)
+
+    if not my_file.is_file():
+        create_db(movie_db, "movies_db_queries.sql")
+        print("movies_db is now created. Use add_movie_to_db to add movies to the database. After, rerun this script to query data for those movies.")
+        sys.exit()
+        
+    engine = create_engine(f'sqlite:///{movie_db}', echo=False)
+
+    movies = pd.read_sql('select movie_name, url from movies ORDER BY movie_name', engine)
+
+    movie_url = ""
+
+    movies_list = []
+
+    if len(movies.index) > 0:
+        movies_list = get_justwatch_data_from_movies()
+    
+        # Process if at least one movie was processed in previous step
+        
+        today = datetime.today().strftime('%Y-%m-%d')
+        
+        if len(movies_list) > 0:
+            add_movies_to_db(movies_list, engine, today)
+            backup_db(movie_db, today)
+            print("Finished!")
+    else:
+        print("No movies in database to query from justwatch. Please use the add_movie_to_db script to add movies to the database")
+        
+main()
