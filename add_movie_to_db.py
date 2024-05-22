@@ -1,4 +1,11 @@
-def add_movie_to_db(movie, url):
+def add_movie_to_db(movie:str, url:str) -> None:
+  """
+    movie
+      The name of the movie to be searched. This should correspond to the movie name on JustWatch.com
+    
+    url
+      The url of the movie to be searched. This should correspond to the url on JustWatch.com
+  """
   from simplejustwatchapi.justwatch import search
   import pandas as pd
   from sqlalchemy import create_engine
