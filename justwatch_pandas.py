@@ -8,7 +8,19 @@ from pathlib import Path
 import sys
 
 def create_db(db_name:str, query_file_name:str) -> None:
-
+    """
+    Creates a sqlite database file and executes a few queries
+    on this new file
+    
+    Parameters
+    ----------
+    
+    db_name
+        The file name for the database to be created
+        
+    query_file_name
+        The file name for the sql file containing the queries to be executed
+    """
     movie_db = db_name
 
     conn = sqlite3.connect(movie_db)
@@ -31,6 +43,20 @@ def create_db(db_name:str, query_file_name:str) -> None:
     conn.close()
     
 def get_justwatch_data_from_movies(movies:pd.DataFrame) -> list[str]:
+    """
+    Returns a list containing movie data from a dataframe input
+    
+    Parameters
+    ----------
+    
+    movies
+        A dataframe containing movie data
+        
+    Returns
+    -------
+    movies_list
+        A list containing movie data
+    """
     movies_list = []
     
     for index, row in movies.iterrows():
@@ -83,6 +109,21 @@ def get_justwatch_data_from_movies(movies:pd.DataFrame) -> list[str]:
     return movies_list
 
 def add_movies_to_db(movies_list:list[str], engine:sa.engine.base.Engine, today:str) -> None:
+    """
+    Adds movie data to the database
+    
+    Parameters
+    ----------
+    
+    movies_list
+        A list containing movie data
+        
+    engine
+        SQLAlchemy engine
+        
+    today
+        a string containing today's date
+    """
     # Process if at least one movie was processed in previous step
     if len(movies_list) > 0:
         # code for pandas to create a dataframe and write to CSV
@@ -104,15 +145,30 @@ def add_movies_to_db(movies_list:list[str], engine:sa.engine.base.Engine, today:
         df5.to_sql('prices', con=engine, if_exists='append',index=False)
         
 def backup_db(src:str, today:str) -> None:
+    """
+    Creates a copy of the current database in a backup folder
+    
+    Parameters
+    ----------
+    
+    src
+        The source path of the database
+        
+    today
+        a string containing today's date
+    """
         #backup database
         
-        Path("db_backup").mkdir(exist_ok=True)
-        
-        dst = fr"db_backup\movies_db_backup_{today}.db"
+    Path("db_backup").mkdir(exist_ok=True)
+    
+    dst = fr"db_backup\movies_db_backup_{today}.db"
 
-        shutil.copyfile(src, dst)
+    shutil.copyfile(src, dst)
 
 def main() -> None:
+    """
+    Main function that calls all of the other functions.
+    """
     movie_db = "movies_db.db"
 
     my_file = Path(movie_db)
