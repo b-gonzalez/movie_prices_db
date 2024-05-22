@@ -1,5 +1,9 @@
 def add_movie_to_db(movie:str, url:str) -> None:
   """
+  Adds a movie to the database
+  
+    Parameters
+    ----------
     movie
       The name of the movie to be searched. This should correspond to the movie name on JustWatch.com
     
