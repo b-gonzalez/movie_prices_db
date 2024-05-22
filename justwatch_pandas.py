@@ -1,3 +1,5 @@
+##Style guide for docstrings: https://numpydoc.readthedocs.io/en/latest/format.html
+
 from simplejustwatchapi.justwatch import search
 import pandas as pd
 import sqlalchemy as sa
