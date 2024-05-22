@@ -1,13 +1,13 @@
 from simplejustwatchapi.justwatch import search
 import pandas as pd
-from sqlalchemy import create_engine
+import sqlalchemy as sa
 from datetime import datetime
 import shutil
 import sqlite3
 from pathlib import Path
 import sys
 
-def create_db(db_name, query_file_name):
+def create_db(db_name:str, query_file_name:str) -> None:
 
     movie_db = db_name
 
@@ -30,7 +30,9 @@ def create_db(db_name, query_file_name):
     c.close()
     conn.close()
     
-def get_justwatch_data_from_movies(movies):
+def get_justwatch_data_from_movies(movies:pd.DataFrame) -> list[str]:
+    movies_list = []
+    
     for index, row in movies.iterrows():
         movie = row['movie_name']
 
@@ -80,7 +82,7 @@ def get_justwatch_data_from_movies(movies):
     
     return movies_list
 
-def add_movies_to_db(movies_list, engine, today):
+def add_movies_to_db(movies_list:list[str], engine:sa.engine.base.Engine, today:str) -> None:
     # Process if at least one movie was processed in previous step
     if len(movies_list) > 0:
         # code for pandas to create a dataframe and write to CSV
@@ -96,16 +98,13 @@ def add_movies_to_db(movies_list, engine, today):
         df5 = pd.merge(df3, df4, left_on='vendor', right_on='vendor', how="inner")
 
         df5 = df5.drop(['movie','movie_name','vendor'], axis=1)
-        
-        # today = datetime.today().strftime('%Y-%m-%d')
 
         df5['date']= today
 
         df5.to_sql('prices', con=engine, if_exists='append',index=False)
         
-def backup_db(src, today):
+def backup_db(src:str, today:str) -> None:
         #backup database
-        # src = movie_db
         
         Path("db_backup").mkdir(exist_ok=True)
         
@@ -113,7 +112,7 @@ def backup_db(src, today):
 
         shutil.copyfile(src, dst)
 
-def main():
+def main() -> None:
     movie_db = "movies_db.db"
 
     my_file = Path(movie_db)
@@ -123,7 +122,7 @@ def main():
         print("movies_db is now created. Use add_movie_to_db to add movies to the database. After, rerun this script to query data for those movies.")
         sys.exit()
         
-    engine = create_engine(f'sqlite:///{movie_db}', echo=False)
+    engine = sa.create_engine(f'sqlite:///{movie_db}', echo=False)
 
     movies = pd.read_sql('select movie_name, url from movies ORDER BY movie_name', engine)
 
