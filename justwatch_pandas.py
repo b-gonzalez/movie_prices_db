@@ -194,7 +194,7 @@ def main(movie_db:str) -> None:
     movies_list = []
 
     if len(movies.index) > 0:
-        movies_list = get_justwatch_data_from_movies()
+        movies_list = get_justwatch_data_from_movies(movies)
     
         # Process if at least one movie was processed in previous step
         
@@ -207,4 +207,4 @@ def main(movie_db:str) -> None:
     else:
         print("No movies in database to query from justwatch. Please use the add_movie_to_db script to add movies to the database")
         
-main("movies_db_1.db")
+main("movies_db.db")
