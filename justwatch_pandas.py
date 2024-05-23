@@ -167,17 +167,22 @@ def backup_db(src:str, today:str) -> None:
 
     shutil.copyfile(src, dst)
 
-def main() -> None:
+def main(movie_db:str) -> None:
     """
     Main function that calls all of the other functions.
+    
+    Parameters
+    ----------
+    
+    movie_db
+        The name of the movie database
     """
-    movie_db = "movies_db.db"
 
     my_file = Path(movie_db)
 
     if not my_file.is_file():
         create_db(movie_db, "movies_db_queries.sql")
-        print("movies_db is now created. Use add_movie_to_db to add movies to the database. After, rerun this script to query data for those movies.")
+        print(f"{movie_db} is now created. Use add_movie_to_db to add movies to the database. After, rerun this script to query data for those movies.")
         sys.exit()
         
     engine = sa.create_engine(f'sqlite:///{movie_db}', echo=False)
@@ -202,4 +207,4 @@ def main() -> None:
     else:
         print("No movies in database to query from justwatch. Please use the add_movie_to_db script to add movies to the database")
         
-main()
+main("movies_db_1.db")
