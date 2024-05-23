@@ -1,11 +1,14 @@
 #Style guide for docstrings: https://numpydoc.readthedocs.io/en/latest/format.html
 
-def add_movie_to_db(movie:str, url:str) -> None:
+def add_movie_to_db(movie_db:str ,movie:str, url:str) -> None:
   """
   Adds a movie to the database
   
   Parameters
   ----------
+  movie_db
+    the full path of the movie database
+  
   movie
     The name of the movie to be searched. This should correspond to the movie name on JustWatch.com
   
@@ -15,8 +18,6 @@ def add_movie_to_db(movie:str, url:str) -> None:
   from simplejustwatchapi.justwatch import search
   import pandas as pd
   from sqlalchemy import create_engine
-
-  movie_db = "movies_db.db"
 
   engine = create_engine(f'sqlite:///{movie_db}', echo=False)
 
