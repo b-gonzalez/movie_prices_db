@@ -186,8 +186,20 @@ def main(movie_db:str) -> None:
         sys.exit()
         
     engine = sa.create_engine(f'sqlite:///{movie_db}', echo=False)
+    
+    movies_query = """
+        SELECT movie_name, url 
+        FROM movies 
+        WHERE movie_id NOT IN (
+            SELECT movie_id 
+            FROM purchases 
+            WHERE purchase_amount is NOT NULL AND 
+            purchase_date is NOT NULL
+        )
+        ORDER BY movie_name
+    """
 
-    movies = pd.read_sql('select movie_name, url from movies ORDER BY movie_name', engine)
+    movies = pd.read_sql(movies_query, engine)
 
     movie_url = ""
 
