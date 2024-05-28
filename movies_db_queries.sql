@@ -28,6 +28,14 @@ CREATE TABLE "prices" (
 	PRIMARY KEY("price_id")
 );
 
+CREATE TABLE "purchases" (
+	"purchase_id"	INTEGER,
+	"purchase_date"	TEXT,
+	"purchase_amount"	REAL,
+	"movie_id"	INTEGER,
+	PRIMARY KEY("purchase_id")
+);
+
 CREATE VIEW movie_data
 AS 
 select p.date, m.movie_name, m.url, m.poster, 
