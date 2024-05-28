@@ -33,9 +33,11 @@ CREATE TABLE "purchases" (
 	"purchase_date"	TEXT,
 	"purchase_amount"	REAL,
 	"movie_id"	INTEGER,
+	FOREIGN KEY("movie_id") REFERENCES "movies"("movie_id"),
 	PRIMARY KEY("purchase_id")
 );
 
+-- DROP VIEW IF EXISTS movie_data;
 CREATE VIEW movie_data
 AS 
 select p.date, m.movie_name, m.url, m.poster, 
@@ -44,4 +46,10 @@ p.price_value, v.vendor from movies m
 INNER JOIN prices p
 ON m.movie_id = p.movie_id
 INNER JOIN vendors v
-ON p.vendor_id = v.vendor_id;
+ON p.vendor_id = v.vendor_id
+WHERE m.movie_id NOT IN (
+	SELECT movie_id 
+	FROM purchases 
+	WHERE purchase_amount is NOT NULL AND 
+	purchase_date is NOT NULL
+);
