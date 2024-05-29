@@ -78,7 +78,9 @@ def add_movie_to_db(movie_db:str ,movie:str, url:str) -> None:
         # code for pandas to create a dataframe and write to CSV
 
       df1 = pd.DataFrame.from_dict(movies_list)
-      
       df1.to_sql('movies', con=engine, if_exists='append',index=False)
+      
+      movie_ids = pd.read_sql(f'select movie_id from movies where url = "{url}"', engine)
+      movie_ids.to_sql('purchases', con=engine, if_exists='append',index=False)
       
       print(f"{movie_name} added to {movie_db}")
