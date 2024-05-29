@@ -49,7 +49,8 @@ ON p.movie_id = m.movie_id
 INNER JOIN vendors v
 ON p.vendor_id = v.vendor_id
 WHERE p.purchase_date is NOT NULL AND
-p.purchase_amount is NOT NULL;
+p.purchase_amount is NOT NULL
+ORDER BY m.movie_name;
 
 -- DROP VIEW IF EXISTS movie_data;
 CREATE VIEW movie_data
