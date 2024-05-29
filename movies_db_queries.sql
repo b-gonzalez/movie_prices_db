@@ -33,6 +33,7 @@ CREATE TABLE "purchases" (
 	"purchase_date"	TEXT,
 	"purchase_amount"	REAL,
 	"movie_id"	INTEGER,
+	"vendor_id"	INTEGER,
 	FOREIGN KEY("movie_id") REFERENCES "movies"("movie_id"),
 	PRIMARY KEY("purchase_id")
 );
