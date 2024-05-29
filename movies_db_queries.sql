@@ -59,4 +59,5 @@ WHERE m.movie_id NOT IN (
 --purchase update query
 update purchases
 set purchase_date = "", purchase_amount = 0, vendor_id = 0
-where movie_id = (select movie_id FROM movies WHERE movie_name = "")
+where movie_id = (select movie_id FROM movies WHERE movie_name = "");
+SELECT * FROM purchases;
