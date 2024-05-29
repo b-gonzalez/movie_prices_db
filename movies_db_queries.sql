@@ -39,6 +39,18 @@ CREATE TABLE "purchases" (
 	PRIMARY KEY("purchase_id")
 );
 
+-- DROP VIEW IF EXISTS movie_purchases;
+CREATE VIEW movie_purchases
+AS 
+SELECT m.movie_id, m.movie_name, v.vendor, p.purchase_date, p.purchase_amount
+FROM purchases p
+INNER JOIN movies m
+ON p.movie_id = m.movie_id
+INNER JOIN vendors v
+ON p.vendor_id = v.vendor_id
+WHERE p.purchase_date is NOT NULL AND
+p.purchase_amount is NOT NULL;
+
 -- DROP VIEW IF EXISTS movie_data;
 CREATE VIEW movie_data
 AS 
@@ -51,9 +63,7 @@ INNER JOIN vendors v
 ON p.vendor_id = v.vendor_id
 WHERE m.movie_id NOT IN (
 	SELECT movie_id 
-	FROM purchases 
-	WHERE purchase_amount is NOT NULL AND 
-	purchase_date is NOT NULL
+	FROM movie_purchases
 );
 
 --purchase update query
