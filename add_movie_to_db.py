@@ -18,6 +18,12 @@ def add_movie_to_db(movie_db:str ,movie:str, url:str) -> None:
   from simplejustwatchapi.justwatch import search
   import pandas as pd
   from sqlalchemy import create_engine
+  import errno
+  import os
+
+  if not os.path.isfile(movie_db):
+    raise FileNotFoundError(
+    errno.ENOENT, os.strerror(errno.ENOENT), movie_db)
 
   engine = create_engine(f'sqlite:///{movie_db}', echo=False)
 
