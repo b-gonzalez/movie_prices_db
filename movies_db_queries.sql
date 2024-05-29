@@ -35,6 +35,7 @@ CREATE TABLE "purchases" (
 	"movie_id"	INTEGER,
 	"vendor_id"	INTEGER,
 	FOREIGN KEY("movie_id") REFERENCES "movies"("movie_id"),
+	FOREIGN KEY("vendor_id") REFERENCES "vendors"("vendor_id"),
 	PRIMARY KEY("purchase_id")
 );
 
@@ -54,3 +55,8 @@ WHERE m.movie_id NOT IN (
 	WHERE purchase_amount is NOT NULL AND 
 	purchase_date is NOT NULL
 );
+
+--purchase update query
+update purchases
+set purchase_date = "", purchase_amount = 0, vendor_id = 0
+where movie_id = (select movie_id FROM movies WHERE movie_name = "")
