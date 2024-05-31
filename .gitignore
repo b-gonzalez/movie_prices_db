@@ -6,6 +6,11 @@
 
 .vscode
 
+# config files and folders
+
+*config*
+/**config**
+
 # test files and folders
 
 *test*
