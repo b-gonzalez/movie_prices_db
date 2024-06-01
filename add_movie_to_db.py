@@ -92,5 +92,3 @@ def add_movie_to_db(movie_db:str ,movie:str, url:str) -> None:
       movie_ids.to_sql('purchases', con=engine, if_exists='append',index=False)
       
       print(f"{movie_name} added to {movie_db}")
-      
-add_movie_to_db("movies_db.db","The Martrix", "https://www.justwatch.com/us/movie/the-matrix")
