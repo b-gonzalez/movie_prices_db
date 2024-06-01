@@ -195,7 +195,7 @@ def main(movie_db:str) -> None:
 
     movies = pd.read_sql(movies_query, engine)
 
-    movie_url = ""
+    # movie_url = ""
 
     movies_list = []
 
