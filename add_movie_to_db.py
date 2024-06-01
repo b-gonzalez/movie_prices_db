@@ -26,8 +26,10 @@ def add_movie_to_db(movie_db:str ,movie:str, url:str) -> None:
     errno.ENOENT, os.strerror(errno.ENOENT), movie_db)
 
   engine = create_engine(f'sqlite:///{movie_db}', echo=False)
+  
+  query = "select distinct movie_name from movies where url = :url"
 
-  movies = pd.read_sql(f'select distinct movie_name from movies where url = "{url}"',engine)
+  movies = pd.read_sql(query, engine, params={"url":url})
   
   if movies.empty:
     movie_url = ""
