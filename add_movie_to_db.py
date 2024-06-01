@@ -27,13 +27,13 @@ def add_movie_to_db(movie_db:str ,movie:str, url:str) -> None:
 
   engine = create_engine(f'sqlite:///{movie_db}', echo=False)
   
-  query = "select distinct movie_name from movies where url = :url"
+  query = "select distinct movie_id from movies where url = :url"
 
   movies = pd.read_sql(query, engine, params={"url":url})
   
   if movies.empty:
     movie_url = ""
-
+ 
     movies_list = []
         
     movie_name = movie
@@ -88,7 +88,9 @@ def add_movie_to_db(movie_db:str ,movie:str, url:str) -> None:
       df1 = pd.DataFrame.from_dict(movies_list)
       df1.to_sql('movies', con=engine, if_exists='append',index=False)
       
-      movie_ids = pd.read_sql(f'select movie_id from movies where url = "{url}"', engine)
+      movie_ids = pd.read_sql(query, engine, params={"url":url})
       movie_ids.to_sql('purchases', con=engine, if_exists='append',index=False)
       
       print(f"{movie_name} added to {movie_db}")
+      
+add_movie_to_db("movies_db.db","The Martrix", "https://www.justwatch.com/us/movie/the-matrix")
