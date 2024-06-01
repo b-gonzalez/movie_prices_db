@@ -195,8 +195,6 @@ def main(movie_db:str) -> None:
 
     movies = pd.read_sql(movies_query, engine)
 
-    # movie_url = ""
-
     movies_list = []
 
     if len(movies.index) > 0:
