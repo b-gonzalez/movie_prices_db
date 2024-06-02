@@ -14,6 +14,10 @@ def add_movie_to_db(movie_db:str ,movie:str, url:str) -> None:
   
   url
     The url of the movie to be searched. This should correspond to the url on JustWatch.com
+    
+  Examples
+  --------
+  add_movie_to_db("movie_db.db","The Matrix", "https://www.justwatch.com/us/movie/the-matrix")
   """
   from simplejustwatchapi.justwatch import search
   import pandas as pd
