@@ -11,7 +11,7 @@ class Vendor(Enum):
     AMC = 4
     Mirosoft = 5
     
-def add_movie_purchase_core(movie_db:str,movieName:str, purchaseDate:str, purchaseAmount:float, vendor:Vendor):
+def add_movie_purchase_core(movie_db:str,movieName:str, purchaseDate:str, purchaseAmount:float, vendor:Vendor) -> None:
   """
   Adds a movie purchase to the database
   
