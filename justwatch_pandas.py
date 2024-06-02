@@ -176,6 +176,10 @@ def main(movie_db:str) -> None:
     
     movie_db
         The name of the movie database
+        
+    Examples
+    --------
+    main("movies_db.db")
     """
 
     my_file = Path(movie_db)
@@ -210,5 +214,3 @@ def main(movie_db:str) -> None:
             print("Finished!")
     else:
         print("No movies in database to query from justwatch. Please use the add_movie_to_db script to add movies to the database")
-        
-main("movies_db.db")
