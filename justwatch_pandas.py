@@ -193,7 +193,7 @@ def main(movie_db:str) -> None:
     
     movies_query = """
         SELECT DISTINCT movie_name, url 
-        FROM movies_data
+        FROM movie_data
         ORDER BY movie_name
     """
 
