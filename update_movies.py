@@ -5,7 +5,16 @@ from sqlalchemy import create_engine
 
 def update_movies_enum(movies_db:str, movies_file:str, excludePurchasedMovies:bool = False):
   """
-  creates an updated Movies enum in the movies file
+  Creates an updated Movies enum in the movies file. 
+  
+  This file is run automatically whenever add_movies_to_db
+  is run. This function can be run manually if a different
+  file name other than movies.py is desired or if you want
+  this file to be generated without adding a movie.
+  
+  NOTE: If a different output filename is desired, the import
+  for the updated filename will need to be updated in the
+  add_movie_purchase.py file.
   
   Parameters
   ----------
