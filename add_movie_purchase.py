@@ -21,7 +21,11 @@ def add_movie_purchase_core(movie_db:str, purchaseDate:str, purchaseAmount:float
     The amount the movie was purchased for
     
   movieName
-    The enum value that represents the movie
+    The enum value that represents the movie.
+    This is imported from the movies.py file.
+    If this file does not exist, it can be
+    created using the code in the update_movies.py
+    file.
     
   vendor
     The enum value that represents the vendor
