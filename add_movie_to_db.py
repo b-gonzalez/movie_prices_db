@@ -1,6 +1,14 @@
 #Style guide for docstrings: https://numpydoc.readthedocs.io/en/latest/format.html
 
-def add_movie_to_db(movie_db:str ,movie:str, url:str) -> None:
+from simplejustwatchapi.justwatch import search
+import pandas as pd
+from sqlalchemy import create_engine
+import errno
+import os
+
+from update_movies import update_movies_enum
+
+def add_movie_to_db(movie_db:str ,movie:str, url:str, excludePurchasedMovies:bool=False) -> None:
   """
   Adds a movie to the database
   
@@ -15,15 +23,14 @@ def add_movie_to_db(movie_db:str ,movie:str, url:str) -> None:
   url
     The url of the movie to be searched. This should correspond to the url on JustWatch.com
     
+  excludePurchasedMovies: optional
+    If this is set to true, the movies enum will
+    excldue movies that have been purchased.
+    
   Examples
   --------
   add_movie_to_db("movie_db.db","The Matrix", "https://www.justwatch.com/us/movie/the-matrix")
   """
-  from simplejustwatchapi.justwatch import search
-  import pandas as pd
-  from sqlalchemy import create_engine
-  import errno
-  import os
 
   if not os.path.isfile(movie_db):
     raise FileNotFoundError(
@@ -96,3 +103,5 @@ def add_movie_to_db(movie_db:str ,movie:str, url:str) -> None:
       movie_ids.to_sql('purchases', con=engine, if_exists='append',index=False)
       
       print(f"{movie_name} added to {movie_db}")
+      
+      update_movies_enum(movie_db,"movies.py",excludePurchasedMovies)
