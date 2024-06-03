@@ -5,7 +5,7 @@ from sqlalchemy import create_engine, Table, MetaData
 from vendors import Vendor
 from movies import Movies
     
-def add_movie_purchase_core(movie_db:str, purchaseDate:str, purchaseAmount:float, movieName:Movies, vendor:Vendor):
+def add_movie_purchase_core(movie_db:str, purchaseDate:str, purchaseAmount:float, movieName:Movies, vendor:Vendor) -> None:
   """
   Adds a movie purchase to the database
   
