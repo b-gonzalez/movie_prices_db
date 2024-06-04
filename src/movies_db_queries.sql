@@ -68,4 +68,4 @@ WHERE m.movie_id NOT IN (
 );
 
 --vendors insert query
-INSERT INTO vendors(vendor) VALUES("Apple"),("Amazon"),("AMC"),("Microsoft"),("Vudu");
+INSERT INTO vendors(vendor) VALUES("Apple"),("Amazon"),("Vudu"),("AMC"),("Microsoft");
