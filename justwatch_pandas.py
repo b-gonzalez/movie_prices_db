@@ -38,6 +38,7 @@ def create_db(db_name:str, query_file_name:str) -> None:
     for query in queries:
         try:
             c.execute(query)
+            conn.commit()
         except Exception as e:
             print(f"Error: {e.message}")
             
@@ -214,3 +215,5 @@ def main(movie_db:str) -> None:
             print("Finished!")
     else:
         print("No movies in database to query from justwatch. Please use the add_movie_to_db script to add movies to the database")
+        
+main("movies_db.db")
