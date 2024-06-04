@@ -74,3 +74,6 @@ where movie_id = (select movie_id FROM movies WHERE movie_name = "");
 SELECT * FROM purchases
 WHERE purchase_date is NOT NULL AND
 purchase_amount is NOT NULL;
+
+--vendors insert query
+INSERT INTO vendors(vendor) VALUES("Apple"),("Amazon"),("AMC"),("Microsoft"),("Vudu");
