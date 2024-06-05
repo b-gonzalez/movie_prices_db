@@ -6,8 +6,6 @@ from sqlalchemy import create_engine
 import errno
 import os
 
-from update_movies import update_movies_enum
-
 def add_movie_to_db(movie_db:str ,movie:str, url:str, excludePurchasedMovies:bool=False) -> None:
   """
   Adds a movie to the database
@@ -103,5 +101,3 @@ def add_movie_to_db(movie_db:str ,movie:str, url:str, excludePurchasedMovies:boo
       movie_ids.to_sql('purchases', con=engine, if_exists='append',index=False)
       
       print(f"{movie_name} added to {movie_db}")
-      
-      update_movies_enum(movie_db,"movies.py",excludePurchasedMovies)
