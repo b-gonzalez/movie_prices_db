@@ -21,9 +21,10 @@
 *note*
 /**note**
 
-# movies.py
+# helper files
 
 movies.py
+vendors.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
