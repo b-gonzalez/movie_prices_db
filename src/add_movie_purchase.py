@@ -1,11 +1,8 @@
 ##Style guide for docstrings: https://numpydoc.readthedocs.io/en/latest/format.html
 
 from sqlalchemy import create_engine, Table, MetaData
-
-from vendors import Vendor
-from movies import Movies
     
-def add_movie_purchase_core(movie_db:str, purchaseDate:str, purchaseAmount:float, movieName:Movies, vendor:Vendor) -> None:
+def add_movie_purchase_core(movie_db:str, purchaseDate:str, purchaseAmount:float, movieId:int, vendorId:int) -> None:
   """
   Adds a movie purchase to the database
   
@@ -20,19 +17,17 @@ def add_movie_purchase_core(movie_db:str, purchaseDate:str, purchaseAmount:float
   purchaseAmount
     The amount the movie was purchased for
     
-  movieName
-    The enum value that represents the movie.
-    This is imported from the movies.py file.
-    If this file does not exist, it can be
-    created using the code in the update_movies.py
-    file.
+  movieId
+    The id value that represents the movie
+    in the movies table
     
-  vendor
-    The enum value that represents the vendor
+  vendorId
+    The id value that represents the vendor
+    in the movies table
     
   Examples
   --------
-  add_movie_purchase_core(movie_db="movies_db.db", purchaseDate='2024-03-25',purchaseAmount="4.99", Movies.Brazil, Vendor.Apple vendor=Vendor.Apple)
+  add_movie_purchase_core(movie_db="movies_db.db", purchaseDate='2024-03-25',purchaseAmount="4.99", 1, 1)
   """
   
   engine = create_engine(f'sqlite:///{movie_db}', echo=False)
@@ -44,7 +39,12 @@ def add_movie_purchase_core(movie_db:str, purchaseDate:str, purchaseAmount:float
   meta_data.create_all(engine)
 
   with engine.connect() as conn:
-    update_statement = purchases_table.update().where(purchases_table.c.movie_id == movieName.value).values(purchase_date=purchaseDate,purchase_amount=purchaseAmount, vendor_id=vendor.value)
+    update_statement = purchases_table.update().where(purchases_table.c.movie_id == movieId)\
+    .values(
+      purchase_date=purchaseDate,
+      purchase_amount=purchaseAmount, 
+      vendor_id=vendorId
+    )
     conn.execute(update_statement)
     conn.commit()
     print("Record updated!")
