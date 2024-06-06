@@ -69,3 +69,10 @@ WHERE m.movie_id NOT IN (
 
 --vendors insert query
 INSERT INTO vendors(vendor) VALUES("Apple"),("Amazon"),("Vudu"),("AMC"),("Microsoft");
+
+--purchase insert trigger
+
+CREATE TRIGGER insertIntoPurchasesAfterMovies AFTER INSERT on movies 
+BEGIN 
+        INSERT INTO purchases(movie_id) VALUES(new.movie_id);
+END;
