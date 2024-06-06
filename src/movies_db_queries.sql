@@ -76,3 +76,11 @@ CREATE TRIGGER insertIntoPurchasesAfterMovies AFTER INSERT on movies
 BEGIN 
         INSERT INTO purchases(movie_id) VALUES(new.movie_id);
 END;
+
+--movies delete trigger
+
+CREATE TRIGGER deleteMovieFromAllTalbes BEFORE DELETE on movies 
+BEGIN 
+	DELETE FROM purchases where movie_id = old.movie_id;
+	DELETE FROM prices where movie_id = old.movie_id;
+END
