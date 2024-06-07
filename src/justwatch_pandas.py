@@ -185,6 +185,10 @@ def main(movie_db:str) -> None:
     Examples
     --------
     main("movies_db.db")
+    
+    from src.justwatch_pandas import main
+
+    main("movies_db.db")
     """
 
     my_file = Path(movie_db)
