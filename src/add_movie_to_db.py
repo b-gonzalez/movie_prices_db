@@ -27,7 +27,7 @@ def add_movie_to_db(movie_db:str ,movie:str, url:str, excludePurchasedMovies:boo
     
   Examples
   --------
-  add_movie_to_db("movie_db.db","The Matrix", "https://www.justwatch.com/us/movie/the-matrix")
+  add_movie_to_db("movies_db.db","The Matrix", "https://www.justwatch.com/us/movie/the-matrix")
   """
 
   if not os.path.isfile(movie_db):
