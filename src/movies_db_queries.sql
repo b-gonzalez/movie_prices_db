@@ -8,13 +8,13 @@ CREATE TABLE "movies" (
 	"short_description"	TEXT,
 	"poster"	TEXT,
 	PRIMARY KEY("movie_id")
-);
+);--
 
 CREATE TABLE "vendors" (
 	"vendor_id"	INTEGER,
 	"vendor"	TEXT,
 	PRIMARY KEY("vendor_id")
-);
+);--
 
 CREATE TABLE "prices" (
 	"price_id"	INTEGER,
@@ -26,7 +26,7 @@ CREATE TABLE "prices" (
 	FOREIGN KEY("movie_id") REFERENCES "movies"("movie_id"),
 	FOREIGN KEY("vendor_id") REFERENCES "vendors"("vendor_id"),
 	PRIMARY KEY("price_id")
-);
+);--
 
 CREATE TABLE "purchases" (
 	"purchase_id"	INTEGER,
@@ -37,7 +37,7 @@ CREATE TABLE "purchases" (
 	FOREIGN KEY("movie_id") REFERENCES "movies"("movie_id"),
 	FOREIGN KEY("vendor_id") REFERENCES "vendors"("vendor_id"),
 	PRIMARY KEY("purchase_id")
-);
+);--
 
 -- DROP VIEW IF EXISTS movie_purchases;
 CREATE VIEW movie_purchases
@@ -50,7 +50,7 @@ INNER JOIN vendors v
 ON p.vendor_id = v.vendor_id
 WHERE p.purchase_date is NOT NULL AND
 p.purchase_amount is NOT NULL
-ORDER BY m.movie_name;
+ORDER BY m.movie_name;--
 
 -- DROP VIEW IF EXISTS movie_data;
 CREATE VIEW movie_data
@@ -65,22 +65,20 @@ ON p.vendor_id = v.vendor_id
 WHERE m.movie_id NOT IN (
 	SELECT movie_id 
 	FROM movie_purchases
-);
+);--
 
 --vendors insert query
-INSERT INTO vendors(vendor) VALUES("Apple"),("Amazon"),("Vudu"),("AMC"),("Microsoft");
+INSERT INTO vendors(vendor) VALUES("Apple"),("Amazon"),("Vudu"),("AMC"),("Microsoft");--
 
 --purchase insert trigger
-
 CREATE TRIGGER insertIntoPurchasesAfterMovies AFTER INSERT on movies 
 BEGIN 
         INSERT INTO purchases(movie_id) VALUES(new.movie_id);
-END;
+END;--
 
 --movies delete trigger
-
 CREATE TRIGGER deleteMovieFromAllTalbes BEFORE DELETE on movies 
 BEGIN 
 	DELETE FROM purchases where movie_id = old.movie_id;
 	DELETE FROM prices where movie_id = old.movie_id;
-END
+END;--
