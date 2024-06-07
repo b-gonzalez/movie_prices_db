@@ -33,7 +33,7 @@ def create_db(db_name:str, query_file_name:str) -> None:
     fd.close()
 
     # all SQL commands (split on ';')
-    queries = sqlFile.split(';')
+    queries = sqlFile.split(';--')
 
     for query in queries:
         try:
@@ -186,7 +186,7 @@ def main(movie_db:str) -> None:
     my_file = Path(movie_db)
 
     if not my_file.is_file():
-        create_db(movie_db, "movies_db_queries.sql")
+        create_db(movie_db, "src/movies_db_queries.sql")
         print(f"{movie_db} is now created. Use add_movie_to_db to add movies to the database. After, rerun this script to query data for those movies.")
         sys.exit()
         
@@ -215,3 +215,5 @@ def main(movie_db:str) -> None:
             print("Finished!")
     else:
         print("No movies in database to query from justwatch. Please use the add_movie_to_db script to add movies to the database")
+        
+main("movies_db.db")
