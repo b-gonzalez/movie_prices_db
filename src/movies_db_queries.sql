@@ -1,3 +1,5 @@
+--NOTE: "; --" patern is needed to properly parse SQL queries. If the comments are removed the parsing will fail.
+
 CREATE TABLE "movies" (
 	"movie_id"	INTEGER,
 	"url"	TEXT,
