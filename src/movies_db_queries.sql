@@ -41,6 +41,15 @@ CREATE TABLE "purchases" (
 	PRIMARY KEY("purchase_id")
 );--
 
+CREATE TABLE "pictures" (
+	"picture_id"	INTEGER,
+	"picture_blob"	BLOB,
+	"picture_base64"	TEXT,
+	"movie_id"	INTEGER,
+	PRIMARY KEY("picture_id"),
+	FOREIGN KEY("movie_id") REFERENCES "movies"("movie_id")
+);--
+
 -- DROP VIEW IF EXISTS movie_purchases;
 CREATE VIEW movie_purchases
 AS 
@@ -68,6 +77,13 @@ WHERE m.movie_id NOT IN (
 	SELECT movie_id 
 	FROM movie_purchases
 );--
+
+CREATE VIEW movie_data_today
+AS 
+SELECT * 
+FROM movie_data md
+WHERE
+md.date = DATE('now');--
 
 --vendors insert query
 INSERT INTO vendors(vendor) VALUES("Apple"),("Amazon"),("Vudu"),("AMC"),("Microsoft");--
