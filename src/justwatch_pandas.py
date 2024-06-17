@@ -202,7 +202,7 @@ def main(movie_db:str) -> None:
     
     movies_query = """
         SELECT DISTINCT movie_name, url 
-        FROM movie_data
+        FROM movies
         ORDER BY movie_name
     """
 
