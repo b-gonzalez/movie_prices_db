@@ -26,10 +26,11 @@
 *TODO*
 /**TODO**
 
-# helper files
+# misc files
 
 movies.py
 vendors.py
+queries.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
